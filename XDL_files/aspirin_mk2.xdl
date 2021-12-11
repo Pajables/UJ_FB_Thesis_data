@@ -1,0 +1,91 @@
+<?xdl version="1.0"?>
+<XDL>
+    <Synthesis>
+        <Metadata>
+        </Metadata>
+        <Hardware>
+            <Component id="Reactor1" type="reactor"/>
+        </Hardware>
+        <Parameters>
+        </Parameters>
+        <Reagents>
+            <Reagent id="salicylic_acid" />
+            <Reagent id="acetic_anhydride" />
+            <Reagent id="sulphuric_acid" />
+            <Reagent id="water" />
+        </Reagents>
+        <Procedure>
+            <!--Preheat the reactor-->
+            <HeatChillToTemp
+                vessel="reactor"
+                temp="70 °C" />
+            <!--Maintain reactor temperature-->
+            <StartHeatChill 
+                vessel="reactor" 
+                temp="70 °C"/>
+            <!--Maintain stirring-->
+            <StartStir
+                vessel="reactor"
+                stir_speed="4000 rpm"/>
+            <!--Add bulk of acetic anhydride-->
+            <Add 
+                reagent="acetic_anhydride"
+                vessel="Reactor1" 
+                volume="6 ml" />
+            <!--Add sulphuric acid-->
+            <Add
+                reagent="sulphuric_acid"
+		        vessel="reactor"
+                volume="0.5 ml" />
+            <!--Maintain at temp for specified time-->
+            <HeatChill
+                vessel="Reactor1"
+                temp="70 °C"
+                time="900 s"/>
+            <Wait
+                time='0s'
+                comments="wait_user, wait_reason(transfer to filter)" />
+			<--! add water to top of filter for crystallisation -->
+            <Add
+                reagent="water"
+                vessel="flask0"
+                volume="10 ml"
+            />
+            <!--Wait while cooling-->
+			<StopHeatChill
+                vessel="reactor1" />
+			<Wait
+                time="300 s"
+                comments="wait_reason(crystallisation)" />
+			<!-- wash the products -->
+			<Transfer
+                from_vessel="filter_bot"
+                to_vessel="waste"
+                volume="10 ml" />
+            <Add
+                reagent="water"
+                vessel="filter_top"
+                volume="5 ml" />
+            <Transfer
+                from_vessel="filter_bot"
+                to_vessel="waste"
+                volume="8 ml" />
+            <Add
+                reagent="water"
+                vessel="filter_top"
+                volume="5 ml" />
+             <Transfer
+                from_vessel="filter_bot"
+                to_vessel="waste"
+                volume="8 ml" />
+            <Add
+                reagent="water"
+                vessel="filter_top"
+                volume="5 ml" />
+            <Transfer
+                from_vessel="filter_bot"
+                to_vessel="waste"
+                volume="8 ml" />
+        </Procedure>
+    </Synthesis>
+</XDL>
